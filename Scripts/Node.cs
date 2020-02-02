@@ -65,7 +65,7 @@ namespace XNode {
 
         [Obsolete("Use AddDynamicInput instead")]
         public NodePort AddInstanceInput(Type type, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
-            return AddInstanceInput(type, connectionType, typeConstraint, fieldName);
+            return AddDynamicInput(type, connectionType, typeConstraint, fieldName);
         }
 
         [Obsolete("Use AddDynamicOutput instead")]
@@ -119,12 +119,12 @@ namespace XNode {
         protected void OnEnable() {
             if (graphHotfix != null) graph = graphHotfix;
             graphHotfix = null;
-            UpdateStaticPorts();
+            UpdatePorts();
             Init();
         }
 
-        /// <summary> Update static ports to reflect class fields. This happens automatically on enable. </summary>
-        public void UpdateStaticPorts() {
+        /// <summary> Update static ports and dynamic ports managed by DynamicPortLists to reflect class fields. This happens automatically on enable or on redrawing a dynamic port list. </summary>
+        public void UpdatePorts() {
             NodeDataCache.UpdatePorts(this, ports);
         }
 
